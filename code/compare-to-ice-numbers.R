@@ -14,7 +14,6 @@ removals <- arrow::read_feather(
   "https://github.com/deportationdata/ice/raw/44903d4c57695f1ef12062b93b7a2fe4418cbf3a/data/removals-latest.feather"
 )
 
-
 # verify
 
 # figure 3
@@ -156,10 +155,43 @@ dtm_monthly_bookins_df |>
     core_monthly_bookins,
     by = c("fiscal_year", "month")
   ) |>
+  pivot_longer(
+    cols = c(bookin_count, core_bookin_count),
+    names_to = "data_source",
+    values_to = "count"
+  ) |> 
+  mutate(
+    data_source = case_when(
+      data_source == "bookin_count" ~ "ICE detention\nmanagement spreadsheets",
+      data_source == "core_bookin_count" ~ "This dataset"
+    ),
+    data_source = factor(data_source, levels = c("ICE detention\nmanagement spreadsheets", "This dataset"))
+  ) |> 
   # order months
-  ggplot(aes(x = year_month)) +
-  geom_line(aes(y = bookin_count, color = "DTM Book-ins"), group = 1) +
-  geom_line(aes(y = core_bookin_count, color = "ICE Core Book-ins"), group = 2)
+  ggplot(aes(x = year_month, y = count, color = data_source)) +
+  geom_line() + 
+  scale_color_grey() +
+  # change y axis scale to thousands
+  scale_y_continuous(labels = scales::comma) +
+  # make x axis date format month-year
+  scale_x_date(date_labels = "%b.\n%Y", date_breaks = "6 months") + 
+  theme_minimal() + 
+  labs(
+    x = "Date",
+    y = "Enforcement actions per week",
+    color = "Data Source"
+  ) +
+  theme(
+    legend.position = "bottom",
+    axis.title.x = element_blank(),
+    # make y axis title further from scale
+    axis.title.y = element_text(margin = margin(r = 10)),
+    # add margin on righthand side of plot so label is shown
+    plot.margin = margin(t = 5, r = 12, b = 5, l = 5)
+  )
+
+ggsave(filename = "figures/compare-counts-dtm.pdf", width = 6, height = 2.5)
+
 
 # create a tibble to summarize every comparison (theirs, ours)
 comparison_summary <-
@@ -249,8 +281,31 @@ compare_df_long |>
             avg_pct_diff = median(percent_difference, na.rm = TRUE))
 
 compare_df_long |>
-  ggplot(aes(x = day, y = n, color = data_source)) +
+  mutate(
+    type = case_when(
+      type == "arrests" ~ "Arrests",
+      type == "detentions" ~ "Detentions",
+      type == "removals" ~ "Removals"
+    ),
+    data_source = factor(data_source, levels = c("current", "2012-2023"), labels = c("This dataset", "ACLU v. ICE (2012-2023)"))
+  ) |> 
+  ggplot(aes(x = day, y = n, color = data_source, line_width = data_source)) +
   geom_line() + 
-  facet_grid(type ~ ., scales = "free_y")
+  facet_grid(type ~ ., scales = "free_y") + 
+  scale_color_grey() +
+  theme_minimal() + 
+  labs(
+    x = "Date",
+    y = "Enforcement actions per week",
+    color = "Data Source"
+  ) +
+  theme(
+    legend.position = "bottom",
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(margin = margin(r = 10)),
+    # add margin on righthand side of plot so label is shown
+    plot.margin = margin(t = 5, r = 12, b = 5, l = 5)
+  )
 
+ggsave(filename = "figures/compare-counts-aclu-ice.pdf", width = 6, height = 4)
 
