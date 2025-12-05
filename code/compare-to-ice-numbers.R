@@ -165,7 +165,7 @@ dtm_monthly_bookins_df |>
       data_source == "bookin_count" ~ "ICE detention\nmanagement spreadsheets",
       data_source == "core_bookin_count" ~ "This dataset"
     ),
-    data_source = factor(data_source, levels = c("ICE detention\nmanagement spreadsheets", "This dataset"))
+    data_source = factor(data_source, levels = c("This dataset", "ICE detention\nmanagement spreadsheets"))
   ) |> 
   # order months
   ggplot(aes(x = year_month, y = count, color = data_source)) +
