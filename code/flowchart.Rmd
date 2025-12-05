@@ -1,0 +1,33 @@
+---
+title: "Untitled"
+format:
+  pdf:
+    geometry: "paperwidth=20in,paperheight=8in"
+---
+
+```{mermaid}
+%%{init: {"themeVariables": {"fontSize": "16px"}, "flowchart": {"curve": "linear"}, "zoom": 0.4}}%%
+flowchart LR
+  Q[<b>Encounter</b><br>ICE or 287g agency]
+  Q -.-> C
+  Q --> H
+  C[<b>Administrative arrest</b><br>Other DHS sub-agency<br>CBP, HSI] -.-> B
+  H[<b>Administrative arrest</b><br>ICE or 287g agency] --> B[<b>Detention</b><br>ICE ERO, private contractors, and state/local jails]
+  %% F[<b>Criminal arrest</b><br>Immigration-related criminal offense<br>ERO, HSI, CBP, or other federal agency] --> B
+  P[<b>Detainer</b><br>Request to jail or prison<br>ICE ERO CAP] --> H
+  %% B --> L
+  C -.-> K
+  %% L[<b>Civil immigration court proceeding</b><br>DOJ EOIR] --> K
+  B --> K[<b>Removal</b><br>ICE ERO]
+  Q --> P
+
+  style Q fill:#ffffff,stroke:#000000,color:#000000
+  style H fill:#ffffff,stroke:#000000,color:#000000
+  style B fill:#ffffff,stroke:#000000,color:#000000
+  style P fill:#ffffff,stroke:#000000,color:#000000
+  style K fill:#ffffff,stroke:#000000,color:#000000
+
+  style C fill:none,color:#808080,stroke:#808080
+  %% style F fill:none,color:#808080,stroke:#808080
+  %% style L fill:none,color:#808080,stroke:#808080
+```
