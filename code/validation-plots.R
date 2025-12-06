@@ -51,7 +51,7 @@ p1 <- ggVennDiagram(x = sets,
                     nintersects = 10
 )
 
-ggsave(filename="figures/id-upset.png", plot=p1, dpi=300, width=8, height=4, units="in")
+ggsave(filename=here("figures", "id-upset.pdf"), plot=p1, dpi=300, width=8, height=4, units="in")
 
 # ---- Plot of weekly enforcement actions ----
 
@@ -98,7 +98,7 @@ p2 <- dat %>%
   ylim(0, NA) +
   labs(title = "Weekly enforcement events & detention stay book-ins")
 
-ggsave(filename="figures/weekly-enforcement-events.png", plot=p2, dpi=300, width=8, height=6, units="in")
+ggsave(filename=here("figures","weekly-enforcement-events.pdf"), plot=p2, dpi=300, width=8, height=6, units="in")
 
 # ---- Plot of weekly detention stay book-ins ----
 
