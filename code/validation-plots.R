@@ -17,8 +17,8 @@ arrests <- arrow::read_feather(
 detainers <- arrow::read_feather(
   "https://github.com/deportationdata/ice/raw/259b7af52ddee745295152e9651813e4b366cf9b/data/detainers-latest.feather"
 )
-detention_stints <- arrow::read_feather(
-  "https://github.com/deportationdata/ice/raw/c7e1d106fefb7b924114fcaf29776ae10634da1a/data/detention-stints-latest.feather"
+detention_stays <- arrow::read_feather(
+  "https://github.com/deportationdata/ice/raw/c7e1d106fefb7b924114fcaf29776ae10634da1a/data/detention-stays-latest.feather"
 )
 removals <- arrow::read_feather(
   "https://github.com/deportationdata/ice/raw/44903d4c57695f1ef12062b93b7a2fe4418cbf3a/data/removals-latest.feather"
@@ -29,7 +29,7 @@ removals <- arrow::read_feather(
 encounter_ids <- unique(encounters$unique_identifier)
 detainer_ids <- unique(detainers$unique_identifier)
 arrest_ids <- unique(arrests$unique_identifier)
-detention_ids <- unique(detention_stints$unique_identifier)
+detention_ids <- unique(detention_stays$unique_identifier)
 removal_ids <- unique(removals$unique_identifier)
 
 sets <- list("encounters" = encounter_ids,
@@ -76,7 +76,7 @@ dat3 <- arrests %>%
   count(week) %>% 
   mutate(type = "arrests")
 
-dat4 <- detention_stays_df %>% 
+dat4 <- detention_stays %>% 
   filter(stay_book_in_date_time >= "2023-09-04",
          stay_book_in_date_time <= "2025-07-27") %>% 
   mutate(week = floor_date(stay_book_in_date_time, "week", week_start = "Monday")) %>% 
