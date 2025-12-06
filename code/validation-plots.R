@@ -9,7 +9,7 @@ library(ggVennDiagram)
 
 # read in ICE Core data
 encounters <- arrow::read_feather(
-  "https://github.com/deportationdata/ice/raw/29445e94454aa9cdb8d2a5cced2c2b5a64ed10da/data/encounters-latest.feather"
+  "https://github.com/deportationdata/ice/raw/main/data/encounters-latest.feather"
 )
 arrests <- arrow::read_feather(
   "https://github.com/deportationdata/ice/raw/29445e94454aa9cdb8d2a5cced2c2b5a64ed10da/data/arrests-latest.feather"
