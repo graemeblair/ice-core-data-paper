@@ -62,6 +62,20 @@ removals_core <-
   ) |>
   summarize(n = n_distinct(unique_identifier)) 
 
+# summary table of above numbers
+comparison_summary_initial <-
+  tibble::tibble(
+    metric = c("Arrests", "Detainers", "Removals"),
+    reported_count = c(arrests_report, detainers_report, removals_ciep),
+    core_count = c(arrests_core$n, detainers_core$n, removals_core$n),
+  ) |>
+  mutate(
+    difference = reported_count - core_count,
+    percent_difference = difference / reported_count * 100
+  )
+
+
+
 # compare dtm 9-25-25 (last in FY25)
 # https://ucla.app.box.com/index.php?rm=box_download_shared_file&shared_name=9d8qnnduhus4bd5mwqt7l95kz34fic2v&file_id=f_1998729580163
 
