@@ -13,19 +13,19 @@ options(scipen = 1000000)
 
 # read in ICE Core data
 encounters <- arrow::read_feather(
-  "https://github.com/deportationdata/ice/raw/main/data/encounters-latest.feather"
+  "data/encounters-july2025.feather"
 )
 arrests <- arrow::read_feather(
-  "https://github.com/deportationdata/ice/raw/29445e94454aa9cdb8d2a5cced2c2b5a64ed10da/data/arrests-latest.feather"
+  "data/arrests-july2025.feather"
 )
 detainers <- arrow::read_feather(
-  "https://github.com/deportationdata/ice/raw/259b7af52ddee745295152e9651813e4b366cf9b/data/detainers-latest.feather"
+  "data/detainers-july2025.feather"
 )
 detention_stays <- arrow::read_feather(
-  "https://github.com/deportationdata/ice/raw/c7e1d106fefb7b924114fcaf29776ae10634da1a/data/detention-stays-latest.feather"
+  "data/detention-stays-july2025.feather"
 )
 removals <- arrow::read_feather(
-  "https://github.com/deportationdata/ice/raw/44903d4c57695f1ef12062b93b7a2fe4418cbf3a/data/removals-latest.feather"
+  "data/removals-july2025.feather"
 )
 
 # ---- Plot of set overlap ----
